@@ -19,6 +19,13 @@ jobs:
   - script: |
       pipelineJob('SciDataAnalyzer') {
         description('CI pipeline: unit tests and Docker image build for SciDataAnalyzer')
+        properties {
+          pipelineTriggers {
+            triggers {
+              pollSCM { scmpoll_spec('* * * * *') }
+            }
+          }
+        }
         definition {
           cpsScm {
             scm {
