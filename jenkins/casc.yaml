@@ -1,0 +1,33 @@
+jenkins:
+  systemMessage: "SciDataAnalyzer CI server"
+  numExecutors: 2
+  securityRealm:
+    local:
+      allowsSignup: false
+      users:
+        - id: "admin"
+          password: "${JENKINS_ADMIN_PASSWORD}"
+  authorizationStrategy:
+    loggedInUsersCanDoAnything:
+      allowAnonymousRead: true
+
+unclassified:
+  location:
+    url: "http://localhost:8080/"
+
+jobs:
+  - script: |
+      pipelineJob('SciDataAnalyzer') {
+        description('CI pipeline: unit tests and Docker image build for SciDataAnalyzer')
+        definition {
+          cpsScm {
+            scm {
+              git {
+                remote { url('https://github.com/ilich956/SciDataAnalyzer.git') }
+                branch('*/main')
+              }
+            }
+            scriptPath('Jenkinsfile')
+          }
+        }
+      }

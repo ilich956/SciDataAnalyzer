@@ -1,0 +1,16 @@
+services:
+  jenkins:
+    build: .
+    container_name: jenkins
+    ports:
+      - "127.0.0.1:8080:8080"
+    environment:
+      JENKINS_ADMIN_PASSWORD: "${JENKINS_ADMIN_PASSWORD:?set JENKINS_ADMIN_PASSWORD}"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      # Lets pipeline stages run "docker build" on the host Docker engine
+      - /var/run/docker.sock:/var/run/docker.sock
+    user: root
+
+volumes:
+  jenkins_home:

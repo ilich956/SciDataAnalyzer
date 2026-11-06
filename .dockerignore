@@ -1,0 +1,9 @@
+.git
+.github
+jenkins
+venv
+.venv
+__pycache__
+.pytest_cache
+*.png
+*.xml
